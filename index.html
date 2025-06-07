@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Payment Link Generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #A594F9;
+            --secondary: #CDC1FF;
+            --light: #F5EFFF;
+            --accent: #E5D9F2;
+            --dark: #2D2A4A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent) 100%);
+            color: var(--dark);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(165, 148, 249, 0.2);
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: rainbow 8s linear infinite;
+        }
+
+        h1 {
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2rem;
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+        }
+
+        .form-control {
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--accent);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(165, 148, 249, 0.3);
+            transform: scale(1.02);
+        }
+
+        .btn {
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: var(--dark);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(165, 148, 249, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-button img {
+            width: 18px;
+            height: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover img {
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .visible {
+            display: block;
+            animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .d-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        /* Animations */
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .form-control, .btn {
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container floating">
+        <h1>UPI Payment Link Generator</h1>
+        <input type="text" class="form-control" id="amount" placeholder="Enter amount in ₹">
+        <input type="text" class="form-control" id="upiId" placeholder="Enter UPI ID">
+        <div class="d-grid">
+            <button id="generateLink" class="btn btn-primary">Generate UPI Payment Link</button>
+            <button id="copyLink" class="btn btn-primary copy-button hidden">
+                Copy to Clipboard
+                <img src="copy to clipboard button icon.png" alt="Copy Icon">
+            </button>
+            <button id="openLink" class="btn btn-primary hidden">Open Link</button>
+            <button id="refreshButton" class="btn btn-secondary hidden">Create New Link</button>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Disable text selection on the entire page
+        document.addEventListener('selectstart', function(event) {
+            event.preventDefault();
+        });
+
+        // Disable common keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (
+                event.key === 'F12' ||
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J')) ||
+                (event.ctrlKey && (event.key === 'S' || event.key === 'U')) ||
+                (event.metaKey && event.key === 'C')
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        // Smooth page load animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 50);
+        });
+
+        document.getElementById('generateLink').addEventListener('click', function() {
+            const amount = document.getElementById('amount').value;
+            const upiId = document.getElementById('upiId').value;
+
+            if (!amount || !upiId) {
+                alert('Please enter both amount and UPI ID.');
+                return;
+            }
+
+            // Show loading state
+            const generateBtn = document.getElementById('generateLink');
+            generateBtn.textContent = "Generating...";
+            generateBtn.disabled = true;
+
+            setTimeout(() => {
+                // Remove non-numeric characters from amount
+                const formattedAmount = amount.replace(/[^0-9.]/g, '');
+
+                // Construct UPI payment link
+                const link = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=Merchant%20Name&cu=INR&am=${encodeURIComponent(formattedAmount)}`;
+
+                // Show buttons with animations
+                document.getElementById('copyLink').classList.remove('hidden');
+                document.getElementById('copyLink').classList.add('visible');
+                
+                setTimeout(() => {
+                    document.getElementById('openLink').classList.remove('hidden');
+                    document.getElementById('openLink').classList.add('visible');
+                    
+                    // Hide Generate Link button
+                    generateBtn.classList.add('hidden');
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = "Generate UPI Payment Link";
+                }, 200);
+
+                // Show refresh button after delay
+                setTimeout(() => {
+                    document.getElementById('refreshButton').classList.remove('hidden');
+                    document.getElementById('refreshButton').classList.add('visible');
+                }, 6000);
+
+                // Copy link to clipboard
+                document.getElementById('copyLink').onclick = function() {
+                    navigator.clipboard.writeText(link).then(() => {
+                        const copyBtn = document.getElementById('copyLink');
+                        copyBtn.innerHTML = 'Copied Successfully! <img src="copy to clipboard button icon.png" alt="Copy Icon">';
+                        
+                        setTimeout(() => {
+                            copyBtn.innerHTML = 'Copy to Clipboard <img src="copy to clipboard button icon.png" alt="Copy Icon">';
+                        }, 3000);
+                    });
+                };
+
+                // Open link in new tab
+                document.getElementById('openLink').onclick = function() {
+                    window.open(link, '_blank');
+                };
+            }, 800); // Simulate processing delay
+        });
+
+        // Refresh page with animation
+        document.getElementById('refreshButton').onclick = function() {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                location.reload();
+            }, 800);
+        };
+    </script>
+</body>
+</html>
